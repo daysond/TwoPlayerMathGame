@@ -34,6 +34,9 @@
     return arc4random_uniform(20)+1;
 }
 
+-(NSInteger)randomQuestion {
+    return arc4random_uniform(4);
+}
 
 #pragma mark - public
 
@@ -41,22 +44,46 @@
     
     NSInteger lhs = [self randomValue];
     NSInteger rhs = [self randomValue];
-    self.answer = lhs + rhs;
-    return [NSString stringWithFormat:@"%@: %ld + %ld = ?",self.activePlayer.name,lhs,rhs];
+    NSInteger questionIndex = [self randomQuestion];
+    switch (questionIndex) {
+        case 0:
+            self.answer = lhs + rhs;
+            return [NSString stringWithFormat:@"%@: %ld + %ld = ?",self.activePlayer.name,lhs,rhs];
+        case 1:
+            self.answer = lhs - rhs;
+            return [NSString stringWithFormat:@"%@: %ld - %ld = ?",self.activePlayer.name,lhs,rhs];
+        case 2:
+            self.answer = lhs * rhs;
+            return [NSString stringWithFormat:@"%@: %ld x %ld = ?",self.activePlayer.name,lhs,rhs];
+        case 3:
+            while (rhs == 0) {
+                rhs = [self randomValue];
+            }
+            self.answer = lhs / rhs;
+            return [NSString stringWithFormat:@"%@: %ld / %ld = ?",self.activePlayer.name,lhs,rhs];
+        default:
+            return nil;
+
+    }
+
     
 }
 
-- (void)updateGameWithAnswer:(NSInteger)answer {
+- (NSString*)updateGameWithAnswer:(NSInteger)answer {
     
     if (self.answer == answer) {
         self.activePlayer.score ++;
+        return @"Correct!";
     } else {
         self.activePlayer.life --;
+        
+        if (self.activePlayer.life == 0) {
+            self.isGameOver = YES;
+        }
+        
+        return @"Incorrect!";
     }
     
-    if (self.activePlayer.life == 0) {
-        self.isGameOver = YES;
-    }
 
     
 }

@@ -18,6 +18,7 @@
 @property (nonatomic) NSMutableString *userAnswer;
 @property (weak, nonatomic) IBOutlet UILabel *answerDisplayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *correctLabel;
 @end
 
 @implementation ViewController
@@ -26,14 +27,14 @@
     NSString* num = sender.currentTitle;
     [self.userAnswer appendString:num];
     self.answerDisplayLabel.text = self.userAnswer;
+    [self.answerDisplayLabel setHidden:NO];
 }
 - (IBAction)submitButtonPressed:(UIButton *)sender {
     
-    [self.gameManager updateGameWithAnswer:[self.userAnswer integerValue]];
-    
-    
+    NSString* correctOrNot = [self.gameManager updateGameWithAnswer:[self.userAnswer integerValue]];
     NSString* score = [NSString stringWithFormat:@"%@ score: %ld",[_gameManager.activePlayer name],[_gameManager.activePlayer score]];
     NSString* life = [NSString stringWithFormat:@"%@ Life: %ld",[_gameManager.activePlayer name],[_gameManager.activePlayer life]];
+    
     if ([self.gameManager.activePlayer.name isEqualToString:@"Player 1"]) {
         _playerOneScore.text = score;
         _p1Life.text = life;
@@ -41,6 +42,15 @@
         _playerTwoScore.text = score;
         _p2Life.text = life;
     }
+    self.correctLabel.text = correctOrNot;
+    if([correctOrNot isEqualToString:@"Correct!"]){
+        self.correctLabel.textColor = [UIColor greenColor];
+    
+    } else if ([correctOrNot isEqualToString:@"Incorrect!"]) {
+         self.correctLabel.textColor = [UIColor redColor];
+    }
+   [self.correctLabel setHidden:NO];
+    
     
     [self.gameManager switchPlayer];
     _questionLabel.text = [self.gameManager generateQuestion];
@@ -50,6 +60,7 @@
     
     if ([self.gameManager isGameOver]) {
         self.questionLabel.text = @"GAME OVER";
+        sender.enabled = false;
     }
 }
 
@@ -58,6 +69,8 @@
     self.userAnswer = [[NSMutableString alloc]initWithString:@""];
     self.gameManager = [[GameManager alloc]init];
     _questionLabel.text = [self.gameManager generateQuestion];
+    [self.answerDisplayLabel setHidden:YES];
+    [self.correctLabel setHidden:YES];
 }
 
 

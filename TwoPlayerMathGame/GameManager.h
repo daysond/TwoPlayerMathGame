@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic)Player* activePlayer;
 @property (nonatomic)BOOL isGameOver;
 
--(void)updateGameWithAnswer:(NSInteger) answer;
+-(NSString*)updateGameWithAnswer:(NSInteger) answer;
 -(NSString*)generateQuestion;
 -(void)switchPlayer;
 
