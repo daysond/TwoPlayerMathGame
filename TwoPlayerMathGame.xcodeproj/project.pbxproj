@@ -13,6 +13,8 @@
 		EDDDD4FF2280884F006C7910 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDDDD4FE2280884F006C7910 /* Assets.xcassets */; };
 		EDDDD5022280884F006C7910 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDDDD5002280884F006C7910 /* LaunchScreen.storyboard */; };
 		EDDDD5052280884F006C7910 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDDD5042280884F006C7910 /* main.m */; };
+		EDDDD50D22808B9E006C7910 /* GameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDDD50C22808B9E006C7910 /* GameManager.m */; };
+		EDDDD51022808BA4006C7910 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDDD50F22808BA4006C7910 /* Player.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		EDDDD5012280884F006C7910 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EDDDD5032280884F006C7910 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDDDD5042280884F006C7910 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EDDDD50B22808B9E006C7910 /* GameManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
+		EDDDD50C22808B9E006C7910 /* GameManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameManager.m; sourceTree = "<group>"; };
+		EDDDD50E22808BA4006C7910 /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		EDDDD50F22808BA4006C7910 /* Player.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,10 @@
 				EDDDD4F82280884E006C7910 /* ViewController.h */,
 				EDDDD4F92280884E006C7910 /* ViewController.m */,
 				EDDDD4FB2280884E006C7910 /* Main.storyboard */,
+				EDDDD50B22808B9E006C7910 /* GameManager.h */,
+				EDDDD50C22808B9E006C7910 /* GameManager.m */,
+				EDDDD50E22808BA4006C7910 /* Player.h */,
+				EDDDD50F22808BA4006C7910 /* Player.m */,
 				EDDDD4FE2280884F006C7910 /* Assets.xcassets */,
 				EDDDD5002280884F006C7910 /* LaunchScreen.storyboard */,
 				EDDDD5032280884F006C7910 /* Info.plist */,
@@ -142,8 +152,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDDDD4FA2280884E006C7910 /* ViewController.m in Sources */,
+				EDDDD50D22808B9E006C7910 /* GameManager.m in Sources */,
 				EDDDD5052280884F006C7910 /* main.m in Sources */,
 				EDDDD4F72280884E006C7910 /* AppDelegate.m in Sources */,
+				EDDDD51022808BA4006C7910 /* Player.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
