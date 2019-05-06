@@ -97,12 +97,9 @@
     self.userAnswer = [[NSMutableString alloc]initWithString:@""];
     self.gameManager = [[GameManager alloc]init];
     self.gameManager.gameDelegate = self;
-    
+    [self updateUI];
     _questionLabel.text = [self.gameManager generateQuestion];
-    _playerOneScore.text = [NSString stringWithFormat: @"Player 1 score: %ld",(long)[self.gameManager.players[0] score]];
-    _playerTwoScore.text = [NSString stringWithFormat: @"Player 2 score: %ld",(long)[self.gameManager.players[1] score]];
-    _p1Life.text = [NSString stringWithFormat: @"Player 1 life: %ld",(long)[self.gameManager.players[0] life]];
-    _p2Life.text = [NSString stringWithFormat: @"Player 2 life: %ld",(long)[self.gameManager.players[1] life]];
+
 }
 
 
