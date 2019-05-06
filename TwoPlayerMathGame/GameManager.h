@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic)NSInteger answer;
 @property (nonatomic)NSArray <Player*> *players;
-@property (nonatomic)NSInteger currentPlayer;
+@property (nonatomic)Player* activePlayer;
 @property (nonatomic)BOOL isGameOver;
 
 -(void)updateGameWithAnswer:(NSInteger) answer;
 -(NSString*)generateQuestion;
-
+-(void)switchPlayer;
 
 @end
 

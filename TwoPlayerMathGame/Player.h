@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic)NSInteger life;
 @property (nonatomic)NSInteger score;
 @property (nonatomic)NSString* name;
-//@property (nonatomic)BOOL *isActive;
+
 
 - (instancetype)initWithName: (NSString* ) name;
 

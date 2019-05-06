@@ -21,8 +21,8 @@
     self = [super init];
     if (self) {
         _answer = 0;
-        _players = [[NSArray alloc]initWithObjects:[[Player alloc]initWithName:@"Player 1"],[[Player alloc]initWithName:@"Player2"], nil];
-        _currentPlayer = 0;
+        _players = [[NSArray alloc]initWithObjects:[[Player alloc]initWithName:@"Player 1"],[[Player alloc]initWithName:@"Player 2"], nil];
+        _activePlayer = self.players[0];
         _isGameOver = NO;
     }
     return self;
@@ -42,30 +42,30 @@
     NSInteger lhs = [self randomValue];
     NSInteger rhs = [self randomValue];
     self.answer = lhs + rhs;
-    return [NSString stringWithFormat:@"%ld + %ld = ?",lhs,rhs];
+    return [NSString stringWithFormat:@"%@: %ld + %ld = ?",self.activePlayer.name,lhs,rhs];
     
 }
 
 - (void)updateGameWithAnswer:(NSInteger)answer {
     
-    Player * currentPlayer = self.players[self.currentPlayer];
     if (self.answer == answer) {
-        currentPlayer.score ++;
+        self.activePlayer.score ++;
     } else {
-        currentPlayer.life --;
+        self.activePlayer.life --;
     }
     
-    if (currentPlayer.life == 0) {
+    if (self.activePlayer.life == 0) {
         self.isGameOver = YES;
-    }
-    
-    if (self.currentPlayer == 1) {
-        self.currentPlayer = 0;
-    } else if (self.currentPlayer == 0 ){
-        self.currentPlayer = 1;
     }
 
     
+}
+-(void)switchPlayer {
+    if ([self.activePlayer.name isEqualToString:@"Player 1"]) {
+        self.activePlayer = self.players[1];
+    } else if ([self.activePlayer.name isEqualToString:@"Player 2"]) {
+        self.activePlayer = self.players[0];
+    }
 }
 
 @end
