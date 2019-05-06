@@ -23,7 +23,6 @@
         _answer = 0;
         _players = [[NSArray alloc]initWithObjects:[[Player alloc]initWithName:@"Player 1"],[[Player alloc]initWithName:@"Player 2"], nil];
         _activePlayer = self.players[0];
-        _isGameOver = NO;
     }
     return self;
 }
@@ -65,8 +64,6 @@
             return nil;
 
     }
-
-    
 }
 
 - (NSString*)updateGameWithAnswer:(NSInteger)answer {
@@ -76,15 +73,11 @@
         return @"Correct!";
     } else {
         self.activePlayer.life --;
-        
         if (self.activePlayer.life == 0) {
-            self.isGameOver = YES;
+            [self.gameDelegate gameOver];
         }
-        
         return @"Incorrect!";
     }
-    
-
     
 }
 -(void)switchPlayer {

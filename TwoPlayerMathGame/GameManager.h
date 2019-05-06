@@ -11,16 +11,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol GameManagerDelegate <NSObject>
+
+-(void)gameOver;
+
+@end
+
 @interface GameManager : NSObject
 
 @property (nonatomic)NSInteger answer;
 @property (nonatomic)NSArray <Player*> *players;
 @property (nonatomic)Player* activePlayer;
-@property (nonatomic)BOOL isGameOver;
+@property (weak,nonatomic) id<GameManagerDelegate> gameDelegate;
 
 -(NSString*)updateGameWithAnswer:(NSInteger) answer;
 -(NSString*)generateQuestion;
 -(void)switchPlayer;
+
 
 @end
 

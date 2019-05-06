@@ -22,56 +22,91 @@
 @end
 
 @implementation ViewController
+
+#pragma mark - delegate method
+
+- (void)gameOver {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Game Over!"
+                                                                   message:@"Do you want to restart?"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* restart = [UIAlertAction actionWithTitle:@"Restart" style:UIAlertActionStyleDefault
+                                                    handler:^(UIAlertAction * action) {self.gameManager = [[GameManager alloc] init];
+                                                        [self updateUI];
+                                                        self.questionLabel.text = [self.gameManager generateQuestion];
+                                                    }];
+    
+    UIAlertAction* doNotRestart = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){self.questionLabel.text = @"GAME OVER";}];
+    
+    [alert addAction:restart];
+    [alert addAction:doNotRestart];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - helpers
+
+-(void)updateUI {
+    _playerOneScore.text = [NSString stringWithFormat: @"Player 1 score: %ld",(long)[self.gameManager.players[0] score]];
+    _playerTwoScore.text = [NSString stringWithFormat: @"Player 2 score: %ld",(long)[self.gameManager.players[1] score]];
+    _p1Life.text = [NSString stringWithFormat: @"Player 1 life: %ld",(long)[self.gameManager.players[0] life]];
+    _p2Life.text = [NSString stringWithFormat: @"Player 2 life: %ld",(long)[self.gameManager.players[1] life]];
+    self.userAnswer = [NSMutableString stringWithString:@""];
+}
+
+-(void)newRound {
+    [self.gameManager switchPlayer];
+    _questionLabel.text = [self.gameManager generateQuestion];
+    self.answerDisplayLabel.text = self.userAnswer;
+}
+
+#pragma mark - IBActions
+
 - (IBAction)buttonPressed:(UIButton *)sender {
     
     NSString* num = sender.currentTitle;
     [self.userAnswer appendString:num];
     self.answerDisplayLabel.text = self.userAnswer;
-    [self.answerDisplayLabel setHidden:NO];
+    
 }
+
 - (IBAction)submitButtonPressed:(UIButton *)sender {
     
+    self.correctLabel.alpha = 100;
+    self.correctLabel.text = @"";
+    if ([self.userAnswer length] == 0) {
+        return;
+    }
+    
     NSString* correctOrNot = [self.gameManager updateGameWithAnswer:[self.userAnswer integerValue]];
-    NSString* score = [NSString stringWithFormat:@"%@ score: %ld",[_gameManager.activePlayer name],[_gameManager.activePlayer score]];
-    NSString* life = [NSString stringWithFormat:@"%@ Life: %ld",[_gameManager.activePlayer name],[_gameManager.activePlayer life]];
-    
-    if ([self.gameManager.activePlayer.name isEqualToString:@"Player 1"]) {
-        _playerOneScore.text = score;
-        _p1Life.text = life;
-    } else {
-        _playerTwoScore.text = score;
-        _p2Life.text = life;
-    }
+
     self.correctLabel.text = correctOrNot;
-    if([correctOrNot isEqualToString:@"Correct!"]){
-        self.correctLabel.textColor = [UIColor greenColor];
     
-    } else if ([correctOrNot isEqualToString:@"Incorrect!"]) {
-         self.correctLabel.textColor = [UIColor redColor];
-    }
-   [self.correctLabel setHidden:NO];
+    ([correctOrNot isEqualToString:@"Correct!"]) ? (self.correctLabel.textColor = [UIColor greenColor]) : ( self.correctLabel.textColor = [UIColor redColor] );
     
+    [UIView animateWithDuration:1 animations:^{self.correctLabel.alpha = 0;}];
+   
+    [self updateUI];
+    [self newRound];
     
-    [self.gameManager switchPlayer];
-    _questionLabel.text = [self.gameManager generateQuestion];
-    
-    self.userAnswer = [NSMutableString stringWithString:@""];
-    self.answerDisplayLabel.text = self.userAnswer;
-    
-    if ([self.gameManager isGameOver]) {
-        self.questionLabel.text = @"GAME OVER";
-        sender.enabled = false;
-    }
 }
+
+#pragma mark - viewDidLoad
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.userAnswer = [[NSMutableString alloc]initWithString:@""];
     self.gameManager = [[GameManager alloc]init];
+    self.gameManager.gameDelegate = self;
+    
     _questionLabel.text = [self.gameManager generateQuestion];
-    [self.answerDisplayLabel setHidden:YES];
-    [self.correctLabel setHidden:YES];
+    _playerOneScore.text = [NSString stringWithFormat: @"Player 1 score: %ld",(long)[self.gameManager.players[0] score]];
+    _playerTwoScore.text = [NSString stringWithFormat: @"Player 2 score: %ld",(long)[self.gameManager.players[1] score]];
+    _p1Life.text = [NSString stringWithFormat: @"Player 1 life: %ld",(long)[self.gameManager.players[0] life]];
+    _p2Life.text = [NSString stringWithFormat: @"Player 2 life: %ld",(long)[self.gameManager.players[1] life]];
 }
+
+
+
 
 
 @end
