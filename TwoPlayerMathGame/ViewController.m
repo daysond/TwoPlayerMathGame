@@ -31,9 +31,8 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* restart = [UIAlertAction actionWithTitle:@"Restart" style:UIAlertActionStyleDefault
-                                                    handler:^(UIAlertAction * action) {self.gameManager = [[GameManager alloc] init];
-                                                        [self updateUI];
-                                                        self.questionLabel.text = [self.gameManager generateQuestion];
+                                                    handler:^(UIAlertAction * action) {
+                                                        [self viewDidLoad];
                                                     }];
     
     UIAlertAction* doNotRestart = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){self.questionLabel.text = @"GAME OVER";}];
